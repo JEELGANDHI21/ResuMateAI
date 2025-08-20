@@ -14,3 +14,23 @@ st.sidebar.markdown("""
     - **Resume Upload**: Upload your resume in PDF format for analysis.
     - **Analysis Options**: Use the buttons to get valuable insights and suggestions.
 """)
+
+with st.container():
+    st.header("Job Description & Resume")
+    jd_input = st.text_area(
+        "Enter Job Description",
+        placeholder="Paste the job description here.",
+        key="text",
+        height=150,
+        help="Paste the job description for the position you're applying for."
+    )
+
+    uploaded_file = st.file_uploader("Upload Your Resume (PDF)", type=["pdf"], label_visibility="collapsed")
+    if uploaded_file:
+        st.success("Resume uploaded successfully!")
+
+st.header("AI-Generated Insights & Feedback")
+st.markdown(
+    "<p style='font-size:14px; color:#777;'>Click on the buttons below to get actionable insights and recommendations.</p>",
+    unsafe_allow_html=True
+)
