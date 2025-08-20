@@ -34,3 +34,60 @@ st.markdown(
     "<p style='font-size:14px; color:#777;'>Click on the buttons below to get actionable insights and recommendations.</p>",
     unsafe_allow_html=True
 )
+
+with st.expander("Resume Analysis Options"):
+    submit1 = st.button("Job Description Insights")
+    submit2 = st.button("Skills Gap Analysis")
+    submit3 = st.button("Resume Percentage Match")
+    submit4 = st.button("ATS Compatibility Check")
+    submit5 = st.button("Resume Feedback")
+    submit6 = st.button("Generate Optimized Resume")
+    submit7 = st.button("Generate Cover Letter")
+
+
+def generate_response(prompt):
+    if uploaded_file is not None:
+
+        pdf_content = extractPDF(uploaded_file)
+
+        response = sendRequest(jd_input, pdf_content, prompt)
+
+        st.subheader("Generated Response:")
+        st.write(response)
+    else:
+        st.warning("Please upload a resume to proceed!")
+
+
+def generate_pdf(prompt):
+    if uploaded_file is not None:
+
+        pdf_content = extractPDF(uploaded_file)
+
+        optimized_text = sendRequest(jd_input, pdf_content, prompt)
+
+        input_filename = uploaded_file.name.split('.')[0]
+        optimized_filename = createPDF(optimized_text, input_filename)
+
+        if optimized_filename:
+            with open(optimized_filename, "rb") as file:
+                st.download_button("Click Here to Download Generated File", file, file_name=optimized_filename)
+        else:
+            st.error("There was an issue generating the optimized resume.")
+    else:
+        st.warning("Please upload a resume to proceed!")
+
+
+if submit1:
+    generate_response(prompt1)
+elif submit2:
+    generate_response(prompt2)
+elif submit3:
+    generate_response(prompt3)
+elif submit4:
+    generate_response(prompt4)
+elif submit5:
+    generate_response(prompt5)
+elif submit6:
+    generate_pdf(prompt6)
+elif submit7:
+    generate_pdf(prompt7)
